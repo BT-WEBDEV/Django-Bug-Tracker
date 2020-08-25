@@ -1,0 +1,38 @@
+{% load ticket_extras %}
+{% block page_content %}{% endblock %}
+<!-- Sidebar Widgets Column -->
+<div class="col-md-4">
+
+    <!-- Search Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">Submit New Ticket</h5>
+      <div class="card-body">
+        <a href="{% url 'new_ticket' %}" class="btn btn-outline-primary btn-lg"> New Ticket </a>
+      </div>
+    </div>
+
+    <!-- Categories Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">View Priorities: </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            {% get_priority_list %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">View Categories: </h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            {% get_category_list %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>

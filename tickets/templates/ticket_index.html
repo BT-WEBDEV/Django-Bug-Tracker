@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %} 
+{% load ticket_extras %}
+{% block page_content %}
+
+<div class = "container">
+    
+    <div class = "row"> 
+
+        <!-- Post Content Column -->
+        <div class = "col-lg-8"> 
+            <h1> Active Tickets </h1>
+            {% for ticket in tickets %}
+            <div class="card">
+                {% for priority in ticket.priorities.all %}
+                <div class="card-header">
+                  Ticket #{{ ticket.id}} |
+                  <a href="{% url 'ticket_priority' priority.name %}">
+                    {{ priority.name }} 
+                  </a>
+                </div>
+                {% endfor %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ ticket.title }}</h5>
+                  <p class="card-text">{{ ticket.summary|truncatewords:20 }}</p>
+                  <p class="card-text"> Categories: 
+                    {% for category in ticket.categories.all %}
+                    <a href="{% url 'ticket_category' category.name %}">
+                        {{ category.name }} 
+                    </a>
+                    {% endfor %}
+                  </p>
+                  <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-primary">View Ticket </a>
+                  <a href="{% url 'edit_ticket' ticket.pk %}" class="btn btn-secondary">Edit Ticket </a>
+                  <a href="{% url 'completed_ticket' ticket.pk %}" class="btn btn-success"> Ticket Completed </a>
+                  <a href="{% url 'delete_ticket' ticket.pk %}" class="btn btn-danger"> Delete Ticket </a>
+                </div>
+              </div>
+              <br>
+            {% endfor %}
+        
+        </div> <!-- Post Column -->
+    
+        {% include "sidebar.html" %}
+    </div> <!-- Row -->
+    
+</div> <!-- Containter -->
+{% endblock %}

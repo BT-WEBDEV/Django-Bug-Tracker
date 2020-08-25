@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+            <div class="card my-4">
+                <h5 class="card-header">Ticket Completed: </h5>
+                <div class="card-body">
+                    <h3> Are you sure you want to mark this ticket as completed?</h3>
+                    <p> {{ ticket.title }} </p>
+                    <p> {{ ticket.summary }} </p>
+                    <form action="{% url 'completed_ticket' ticket.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success"> Ticket Completed </button>
+                    </form>
+                </div>
+            </div>
+        </div>  <!-- Ticket Column-->
+
+        {% include "sidebar.html" %}
+
+  </div> <!-- ROW -->
+
+</div> <!-- Containter -->
+
+{% endblock %}

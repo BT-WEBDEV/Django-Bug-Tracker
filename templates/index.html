@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+ <!-- Page Content -->
+ <div class="container">
+
+    <!-- Jumbotron Header -->
+    <header class="jumbotron my-4">
+      <h1 class="display-3">BUG TRACKER</h1>
+      <p class="lead">This application tracks bug reports for a website & software development team. To begin, either create a new account or login to create, manage, and view bug reports.</p>
+      <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Create an Account!</a>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+      <a href="{% url 'password_reset' %}" class="btn btn-primary btn-lg">Forgot Password?</a>
+    </header>
+
+    <!-- Page Features -->
+    <h2>Active Severe Bugs </h2>
+    <div class="row">
+      {% for ticket in tickets %}
+      <div class="col-lg-6 ">
+        <div class="card">
+          {% for priority in ticket.priorities.all %}
+            <div class="card-header">
+              Ticket #{{ ticket.id}} | {{ priority.priority  }}
+            </div>
+            {% endfor %}
+          <div class="card-body">
+            <h4 class="card-title">{{ ticket.title }}</h4>
+            <p class="card-text">{{ ticket.summary|truncatewords:20 }}</p>
+            <p class="card-text"> Categories: 
+              {% for category in ticket.categories.all %}
+              <a href="{% url 'ticket_category' category.name %}">
+                  {{ category.name }} 
+              </a>
+              {% endfor %}
+            </p>
+            <a href="{% url 'ticket_detail' ticket.pk %}" class="btn btn-primary">View Ticket </a>
+          </div>
+        </div>
+        <br>
+      </div>
+      {% endfor %}
+    </div> <!-- /.row -->
+
+  </div>
+
+
+
+{% endblock %}

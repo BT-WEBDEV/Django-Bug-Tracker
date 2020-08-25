@@ -1,0 +1,7 @@
+{% for priority in priorities %}
+    <ul class="list-unstyled mb-0">
+      <li>
+        <a href="{% url 'ticket_priority' priority.name %}">{{ priority.name }} </a>
+      </li>
+    </ul>
+{% endfor %}

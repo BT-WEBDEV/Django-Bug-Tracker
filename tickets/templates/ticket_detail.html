@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- ID/Title -->
+        <h1 class="mt-4">Ticket #{{ ticket.id}} | {{ ticket.title }}</h1>
+
+        <!-- Submission/Assigned To -->
+        <p class="lead">
+          Submitted By: {{ ticket.reporter }} | Assigned To: {{ ticket.assigned_to }}
+        </p>
+  
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Created On: {{ ticket.created_on }} | Last Modified: {{ ticket.last_modified }}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="{{ ticket.image.url }}" alt="">
+
+        <hr>
+
+        <!-- Post Content -->
+        <h2>Overview: </h2>
+        <p> {{ ticket.summary }} </p> 
+        <p> URL: (if applicable):
+            <a href="{{ ticket.url }}"> {{ ticket.url }}</a> 
+        </p>
+
+        <hr>
+
+        <h2>Environment: </h2>
+        <p> Platform: {{ ticket.platform }} </p> 
+        <p> Operating System: {{ ticket.operating_system }}</p>
+        <p> Browser: {{ ticket.browser }}</p>
+        
+        <hr>
+
+        <h2>Details: </h2>
+        <p> Steps to Reproduce: {{ ticket.steps_to_reproduce }} </p> 
+        <p> Actual Result: {{ ticket.actual_result }}
+        
+        <hr>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Got more info or a solution? Let the team know:</h5>
+          <div class="card-body">
+            <form action="/tickets/{{ ticket.pk }}/" method="post">
+            {% csrf_token %}
+              <div class="form-group">
+                {{ form.author }}
+              </div>
+              <div class="form-group">
+                {{ form.body }}
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Single Comment -->
+        <h3> Comments: </h3>
+        <br>
+        {% for comment in comments %}
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">{{ comment.author }}</h5>
+            <p>On: {{comment.created_on.date }}</p>
+            {{ comment.body }}
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+        
+        <!--Content Column -->
+      </div>
+      {% include "sidebar.html" %}
+    <!-- /.row -->
+  </div>
+
+  <!-- /.container -->
+</div>
+  {% endblock %}

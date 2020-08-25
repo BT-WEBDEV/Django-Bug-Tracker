@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+            <div class="card my-4">
+                <h5 class="card-header">Edit Ticket:</h5>
+                <div class="card-body">
+                    <form enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>  <!-- Ticket Column-->
+
+        {% include "sidebar.html" %}
+
+  </div> <!-- ROW -->
+
+</div> <!-- Containter -->
+
+
+
+
+
+
+{% endblock %}
